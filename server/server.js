@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 dotenv.config();
 
@@ -13,7 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test route
+// Routes
 app.get("/", (req, res) => {
   res.json({
     success: true,
@@ -27,6 +29,9 @@ app.get("/api/health", (req, res) => {
     message: "CivicFix API is healthy",
   });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Server
 const PORT = process.env.PORT || 5000;
